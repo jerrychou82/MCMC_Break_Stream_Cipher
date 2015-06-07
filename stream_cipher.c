@@ -43,7 +43,7 @@ void score_update(text_t text, score_t score, int text_len) {
             score[i][j] = 0;
     }
     for(int i = 1; i < text_len; i++) {
-        score[text[i-1]][text[i]]++;
+        score[(int)text[i-1]][(int)text[i]]++;
     }
 }
 

@@ -1,4 +1,4 @@
-#define KEY_LEN 1024
+//#define KEY_LEN 1024
 #define BETA 1
 
 typedef char* text_t;

@@ -10,7 +10,10 @@
 
 int main(int argc, char** argv) {
 
-    assert(argc == 4);
+    if(argc != 4) {
+        printf("usage: ./mcmc_stream_cipher [testfile] [#iterations] [#cycles]\n");
+        return 0;
+    }
     char* file_test = (char*)malloc(30 * sizeof(char));
     strcpy(file_test, argv[1]);
     int niter = atoi(argv[2]);
@@ -33,11 +36,22 @@ int main(int argc, char** argv) {
     key_init(key);
     
     /* Encrypt */
-    // printf("Plain text:\n%s\n", text);
+#ifdef DEMO
+    printf("Plain text:\n%s\n", text);
+#endif
     // text_print(text, text_len);
     encrypt(text, cipher, key, text_len);
-    // printf("Cipher text:\n");
-    // text_print(text, text_len);
+#ifdef DEMO
+    cipher[strlen(text)-1] = '\0';
+    for(int i = 0; i < strlen(text) -1; i++) {
+        if(cipher[i] < 32 || cipher[i] > 126)
+            printf("?");
+        else
+            printf("%c", cipher[i]);
+    }
+    printf("\n");
+    // printf("Cipher text:\n%s\n", cipher);
+#endif
 
     /* train */
     score_t text_score = (double**)malloc(128 * sizeof(double*));
@@ -145,6 +159,14 @@ int main(int argc, char** argv) {
     target = target_cal(text_score, train_score, text_len, train_len);
     printf("Plain target: %lf\n", target);
     decrypt(recover, cipher, guess_key, text_len);
+#ifdef DEMO
+    for(int i = 0; i < strlen(text); i++) {
+        if(recover[i] < 32 || recover[i] > 126)
+            printf("?");
+        else
+            printf("%c", recover[i]);
+    }
+#endif
     text_diff(plain, recover, text_len);
     key_diff(key, max_key);
 }

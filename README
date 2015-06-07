@@ -1,12 +1,19 @@
 REAME file for MCMC_Break_Stream_Cipher
 
 1. Compile
-> make
+    > make
 
 2. Execution
-> ./mcmc_stream_cipher [textfilename] [#iteration] [#cycle]
+    > ./mcmc_stream_cipher [textfilename] [#iteration] [#cycle]
 
 3. Default settings
     (a) Key length
-        The default setting of key length is in stream_cipher.h
+        The default setting of key length is in Makefile. You can freely
+        chenge the setting. The default length of key is 128.
 
+4. Demo version
+    In the demo version, you can see the original text, the cipher text and
+    the recovered text.
+    To compile the demo version, just type
+        > make demo
+    And execute the file just like the previous one.
